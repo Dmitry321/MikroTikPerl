@@ -309,19 +309,19 @@ sub login
         return 0;
     }
     my(@command);
-    push(@command,'/login');
-    my($retval,@results) = talk(\@command);
-    my($chal) = pack("H*",$results[0]{'ret'});
-    my($md) = new Digest::MD5;
-    $md->add(chr(0));
-    $md->add($passwd);
-    $md->add($chal);
-    my($hexdigest) = $md->hexdigest;
-    undef(@command);
+#    push(@command,'/login');
+#    my($retval,@results) = talk(\@command);
+#    my($chal) = pack("H*",$results[0]{'ret'});
+#    my($md) = new Digest::MD5;
+#    $md->add(chr(0));
+#    $md->add($passwd);
+#    $md->add($chal);
+#    my($hexdigest) = $md->hexdigest;
+#    undef(@command);
     push(@command, '/login');
     push(@command, '=name=' . $username);
-    push(@command, '=response=00' . $hexdigest);
-    ($retval,@results) = &talk(\@command);
+    push(@command, '=password=' . $passwd);
+    my ($retval,@results) = &talk(\@command);
     if ($retval > 1)
     {
         $error_msg = $results[0]{'message'};
